@@ -1,2 +1,15 @@
 // For information on how to create your own theme, please see:
 // http://ionicframework.com/docs/theming/
+:root {
+  --color-claro: #ffffff;
+  --color-oscuro: #222222;
+  --texto-claro: #ffffff;
+  --texto-oscuro: #222222;
+  --espaciado-base: 1rem;
+  --espaciado-grande: 2rem;
+
+  --text-color: var(--texto-oscuro);
+  --background-color: var(--color-claro);
+  --card-color: #333333;
+}
+
