@@ -58,25 +58,50 @@ export class HomePage implements OnInit {
   async cambiarColor() {
     const esOscuro = this.colorActual === this.colorOscuro;
     this.colorActual = esOscuro ? this.colorClaro : this.colorOscuro;
-    this.colorTextoActual = esOscuro ? this.colorTextoOscuro : this.colorTextoClaro;
 
-    localStorage.setItem('tema', this.colorActual === this.colorOscuro ? 'oscuro' : 'claro');
+    // Asignar color de texto según el NUEVO colorActual
+    if (this.colorActual === this.colorOscuro) {
+      this.colorTextoActual = this.colorTextoClaro;
+    } else {
+      this.colorTextoActual = this.colorTextoOscuro;
+    }
 
-    await this.storageService.set('theme',this.colorActual)
-    console.log('Tema Guardado: ', this.colorActual)
-  
+    const temaGuardado = this.colorActual === this.colorOscuro ? 'oscuro' : 'claro';
+
+    localStorage.setItem('tema', temaGuardado);
+    await this.storageService.set('theme', temaGuardado);
+
+    console.log('Tema Guardado: ', temaGuardado);
   }
+
+
+
 
 
   async localStorageData() {
     const savedTheme = await this.storageService.get('theme');
-    if (savedTheme) {
-      this.colorActual = savedTheme;
+
+    if (savedTheme === 'oscuro' || savedTheme === 'claro') {
+      this.colorActual = savedTheme === 'oscuro' ? this.colorOscuro : this.colorClaro;
+      
+      // Texto claro para fondo oscuro, texto oscuro para fondo claro
+      this.colorTextoActual = savedTheme === 'oscuro' ? this.colorTextoClaro : this.colorTextoOscuro;
+    } else {
+      // Por defecto modo oscuro
+      this.colorActual = this.colorOscuro;
+      this.colorTextoActual = this.colorTextoClaro;
     }
   }
+
+
   
   inIntro () {
     console.log("Ver Intro");
     this.router.navigateByUrl("/intro")
   }
+
+  get bordeColor(): string {
+  return this.colorTextoActual === '#ffffff' ? '#444' : '#ccc';
+}
+
 }
