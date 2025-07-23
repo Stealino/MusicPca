@@ -54,8 +54,16 @@ export class IntroPage implements OnInit {
 
   async goBack() {
     await this.storageService.set('intro-visto', true);
-    this.router.navigateByUrl('/home');
+
+    const loginExitoso = await this.storageService.get('login-exitoso');
+
+    if (loginExitoso === true) {
+      this.router.navigateByUrl('/menu/home');
+    } else {
+      this.router.navigateByUrl('/login');
+    }
   }
+
 
 }
 

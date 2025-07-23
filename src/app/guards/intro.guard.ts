@@ -6,18 +6,24 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class IntroGuard implements CanActivate {
+export class AuthGuard implements CanActivate {
 
   constructor(private storageService: StorageService, private router: Router) {}
 
   async canActivate(): Promise<boolean> {
     const introVisto = await this.storageService.get('intro-visto');
+    const loginExitoso = await this.storageService.get('login-exitoso');
 
-    if (introVisto) {
-      return true;
-    } else {
+    if (!introVisto) {
       this.router.navigateByUrl('/intro');
       return false;
     }
+
+    if (!loginExitoso) {
+      this.router.navigateByUrl('/login');
+      return false;
+    }
+
+    return true;
   }
 }

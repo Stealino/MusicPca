@@ -1,0 +1,62 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Registro</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form [formGroup]="registerForm" (ngSubmit)="registerUser()">
+    
+    <ion-item>
+      <ion-label position="floating">Nombre</ion-label>
+      <ion-input formControlName="nombre" type="text"></ion-input>
+    </ion-item>
+    <ion-text color="danger" *ngIf="registerForm.get('nombre')?.touched && registerForm.get('nombre')?.hasError('required')">
+      <p class="ion-padding-start">El nombre es obligatorio</p>
+    </ion-text>
+
+    <ion-item>
+      <ion-label position="floating">Apellido</ion-label>
+      <ion-input formControlName="apellido" type="text"></ion-input>
+    </ion-item>
+    <ion-text color="danger" *ngIf="registerForm.get('apellido')?.touched && registerForm.get('apellido')?.hasError('required')">
+      <p class="ion-padding-start">El apellido es obligatorio</p>
+    </ion-text>
+
+    <ion-item>
+      <ion-label position="floating">Correo</ion-label>
+      <ion-input formControlName="email" type="email"></ion-input>
+    </ion-item>
+    <ion-text color="danger" *ngIf="registerForm.get('email')?.touched">
+      <p class="ion-padding-start" *ngIf="registerForm.get('email')?.hasError('required')">El correo es obligatorio</p>
+      <p class="ion-padding-start" *ngIf="registerForm.get('email')?.hasError('email')">Correo no válido</p>
+    </ion-text>
+
+    <ion-item>
+      <ion-label position="floating">Contraseña</ion-label>
+      <ion-input formControlName="password" type="password"></ion-input>
+    </ion-item>
+    <ion-text color="danger" *ngIf="registerForm.get('password')?.touched">
+      <p class="ion-padding-start" *ngIf="registerForm.get('password')?.hasError('required')">La contraseña es obligatoria</p>
+      <p class="ion-padding-start" *ngIf="registerForm.get('password')?.hasError('minlength')">Mínimo 6 caracteres</p>
+    </ion-text>
+
+    <ion-button
+      expand="full"
+      shape="round"
+      color="primary"
+      [disabled]="!registerForm.valid"
+      type="submit">
+      Registrar
+    </ion-button>
+
+    <ion-button
+      expand="full"
+      fill="clear"
+      color="medium"
+      (click)="goToLogin()">
+      ¿Ya tienes cuenta? Inicia sesión
+    </ion-button>
+
+  </form>
+</ion-content>
