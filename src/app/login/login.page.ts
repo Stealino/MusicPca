@@ -63,17 +63,32 @@ export class LoginPage implements OnInit {
   }
 
 
-  async loginUser(credentials: any) {
-    const isValid = await this.authService.loginUser(credentials);
-
-    if (isValid) {
-      await this.storageService.set('login-exitoso', true);
-      this.errorMessage = '';
-      this.navCtrl.navigateForward('/menu/home');
-    } else {
-      this.errorMessage = 'Credenciales incorrectas.';
+  loginUser() {
+    if (this.loginForm.invalid) {
+      this.errorMessage = "Completa todos los campos correctamente.";
+      return;
     }
+
+    const credentials = this.loginForm.value;
+
+    this.authService.loginUser(credentials).subscribe({
+      next: async (response) => {
+        if (response.status === 'OK') {
+          await this.authService.saveUser(response.user);
+          await this.storageService.set('login-exitoso', true);
+          this.errorMessage = '';
+          this.navCtrl.navigateForward('/menu/home');
+        } else {
+          this.errorMessage = 'Credenciales incorrectas.';
+        }
+      },
+      error: (err) => {
+        console.error(err);
+        this.errorMessage = 'Error al conectar con el servidor.';
+      }
+    });
   }
+
 
   goToRegister() {
     this.navCtrl.navigateForward('/register');

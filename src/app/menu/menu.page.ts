@@ -15,13 +15,17 @@ import { StorageService } from '../services/storage.service';
 })
 export class MenuPage implements OnInit {
 
+
+
   constructor(private storageService: StorageService, private navCtrl: NavController) { }
+
 
   ngOnInit() {
   }
 
   goToIntro() {
     console.log("Ir hacia la intro")
+    this.navCtrl.navigateRoot("/intro")
   }
 
   async logout() {

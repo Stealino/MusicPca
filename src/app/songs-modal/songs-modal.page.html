@@ -1,0 +1,21 @@
+<ion-header >
+  <ion-toolbar>
+    <ion-title>songsModal</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let song of songs">
+      <ion-label (click)="selectSong(song)">
+        <h2>{{ song.name }}</h2>
+        <p>{{ song.artist }}</p>
+      </ion-label>
+      <ion-button fill="clear" (click)="toggleFavorite(song)">
+        <ion-icon [name]="favoritesMap[song.id] ? 'close-circle' : 'heart'" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-item>
+  </ion-list>
+
+
+</ion-content>

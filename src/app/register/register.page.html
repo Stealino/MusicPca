@@ -6,23 +6,26 @@
 
 <ion-content class="ion-padding">
   <form [formGroup]="registerForm" (ngSubmit)="registerUser()">
+
     
     <ion-item>
       <ion-label position="floating">Nombre</ion-label>
-      <ion-input formControlName="nombre" type="text"></ion-input>
+      <ion-input formControlName="name" type="text"></ion-input>
     </ion-item>
-    <ion-text color="danger" *ngIf="registerForm.get('nombre')?.touched && registerForm.get('nombre')?.hasError('required')">
+    <ion-text color="danger" *ngIf="registerForm.get('name')?.touched && registerForm.get('name')?.hasError('required')">
       <p class="ion-padding-start">El nombre es obligatorio</p>
     </ion-text>
 
+  
     <ion-item>
       <ion-label position="floating">Apellido</ion-label>
-      <ion-input formControlName="apellido" type="text"></ion-input>
+      <ion-input formControlName="last_name" type="text"></ion-input>
     </ion-item>
-    <ion-text color="danger" *ngIf="registerForm.get('apellido')?.touched && registerForm.get('apellido')?.hasError('required')">
+    <ion-text color="danger" *ngIf="registerForm.get('last_name')?.touched && registerForm.get('last_name')?.hasError('required')">
       <p class="ion-padding-start">El apellido es obligatorio</p>
     </ion-text>
 
+    
     <ion-item>
       <ion-label position="floating">Correo</ion-label>
       <ion-input formControlName="email" type="email"></ion-input>
@@ -32,6 +35,7 @@
       <p class="ion-padding-start" *ngIf="registerForm.get('email')?.hasError('email')">Correo no válido</p>
     </ion-text>
 
+   
     <ion-item>
       <ion-label position="floating">Contraseña</ion-label>
       <ion-input formControlName="password" type="password"></ion-input>
@@ -41,6 +45,21 @@
       <p class="ion-padding-start" *ngIf="registerForm.get('password')?.hasError('minlength')">Mínimo 6 caracteres</p>
     </ion-text>
 
+   
+    <ion-item>
+      <ion-label position="floating">Confirmar contraseña</ion-label>
+      <ion-input formControlName="password_confirmation" type="password"></ion-input>
+    </ion-item>
+    <ion-text color="danger" *ngIf="registerForm.hasError('passwordMismatch') && registerForm.get('password_confirmation')?.touched">
+      <p class="ion-padding-start">Las contraseñas no coinciden</p>
+    </ion-text>
+
+
+    <ion-text color="danger" *ngIf="errorMessage">
+      <p class="ion-padding-start">{{ errorMessage }}</p>
+    </ion-text>
+
+ 
     <ion-button
       expand="full"
       shape="round"
@@ -50,6 +69,7 @@
       Registrar
     </ion-button>
 
+  
     <ion-button
       expand="full"
       fill="clear"
@@ -60,3 +80,4 @@
 
   </form>
 </ion-content>
+

@@ -9,7 +9,7 @@
     <p>Ingresa tus datos</p>
     <img src="assets/images/user.png">
   </figure>
-  <form [formGroup]="loginForm" (ngSubmit)="loginUser(loginForm.value)">
+  <form [formGroup]="loginForm" (ngSubmit)="loginUser()">
     <ion-item>
       <ion-input label="Email" labelPlacement="stacked" placeholder="Escribe tu email" formControlName="email"></ion-input>
     </ion-item>

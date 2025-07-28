@@ -7,45 +7,74 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content [style.--background]="colorActual" [style.color]="colorTextoActual">
+  <ion-card [style.--background]="colorActual" [style.color]="colorTextoActual" class="card-estilizada">
+    <ion-text class="seccion-titulo">
+      <h2 [style.color]="colorTextoActual">Géneros más populares</h2>
+    </ion-text>
 
-<div [style.background-color]="colorActual" [style.color]="colorTextoActual">
-    <ion-card 
-  [style.background-color]="colorActual" 
-  [style.color]="colorTextoActual" 
-  [style.border]="'1px solid ' + bordeColor"
-  style="margin: 0; border-radius: 8px;">
-
-      <ion-card-header>
-        <ion-card-title [style.color]="colorTextoActual">Los Generos Mas Populares</ion-card-title>
-        <ion-card-subtitle>AppPCA</ion-card-subtitle>
-      </ion-card-header>
-
-      <ion-card-content>
-      </ion-card-content>
-    </ion-card>
-
-    <swiper-container
-    pagination="true"
-    loop="true"
-    slides-per-view="1"
-    style="width: 100%; height: 100%;"
-    >
+    <swiper-container pagination="true" loop="true" slides-per-view="1">
       <swiper-slide *ngFor="let genre of genres">
-        <div class="slide-content" [style.background-color]="colorActual" [style.color]="colorTextoActual">
-          <h2>{{ genre.title}}</h2>
-          <img [src]="genre.image" [alt]="genre.title">
-          <p>{{genre.description}}</p>
+        <div class="genre-card-content">
+          <h2 [style.color]="colorTextoActual">{{ genre.title }}</h2>
+          <img [src]="genre.image" class="imagen-genre" />
+          <p [style.color]="colorTextoActual" class="descripcion">{{ genre.description }}</p>
         </div>
       </swiper-slide>
     </swiper-container>
-  <ion-button (click)="cambiarColor()">
-    Cambia de tema
-  </ion-button>
+  </ion-card>
 
-  <div>
-    <ion-button (click)="inIntro()">Ir al intro</ion-button> 
-  </div>
 
-</div>
+
+  <ion-text class="seccion-titulo">
+    <h2 [style.color]="colorTextoActual">Álbumes</h2>
+  </ion-text>
+
+  <swiper-container pagination="true" loop="true" slides-per-view="3">
+    <swiper-slide *ngFor="let album of albums" (click)="showSongs(album.id)">
+      <div class="slide-content">
+        <img [src]="album.image" />
+        <p [style.color]="colorTextoActual">{{ album.name }}</p>
+      </div>
+    </swiper-slide>
+  </swiper-container>
+  
+  <ion-text class="seccion-titulo">
+    <h2 [style.color]="colorTextoActual">Artistas</h2>
+  </ion-text>
+
+  <swiper-container pagination="true" loop="true" slides-per-view="3">
+    <swiper-slide *ngFor="let artist of artists" (click)="showSongsByArtist(artist.id)">
+      <div class="slide-content">
+        <img [src]="artist.image" />
+        <p [style.color]="colorTextoActual">{{ artist.name }}</p>
+      </div>
+    </swiper-slide>
+  </swiper-container>
+  <ion-button expand="block" (click)="cambiarColor()">Cambiar tema</ion-button>
 </ion-content>
+
+<ion-footer>
+  <ion-grid>
+    <ion-row>
+      <ion-col class="ion-text-start">{{formatTime(currentSong?.currentTime) || "0:00"}}</ion-col>
+      <ion-col class="ion-text-end">{{formatTime(getRemainingTime()) || "0:00"}}</ion-col>
+    </ion-row>
+    <ion-progress-bar [value]="newTime || 0"></ion-progress-bar>
+    <ion-row>
+      <ion-col size="1">
+        <ion-icon name="heart"></ion-icon>
+      </ion-col>
+      <ion-col size="10">
+        <ion-text>
+          {{ song.name || "N/A" }}
+        </ion-text>
+      </ion-col>
+      <ion-col size="1">
+        <ion-icon name="play" *ngIf="!song.playing" (click)="play()"></ion-icon>
+        <ion-icon name="pause" *ngIf="song.playing" (click)="pause()"></ion-icon>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-footer>
+

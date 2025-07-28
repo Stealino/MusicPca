@@ -30,6 +30,10 @@ export const routes: Routes = [
         canActivate: [AuthGuard], 
       },
     ]
+  },
+  {
+    path: 'songs-modal',
+    loadComponent: () => import('./songs-modal/songs-modal.page').then( m => m.SongsModalPage)
   }
 
 ];
